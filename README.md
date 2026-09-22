@@ -69,7 +69,7 @@ The UI includes:
 ```
 
 ## 15. Installation
-Ensure Python 3.8+ is installed. Clone the repository and install requirements:
+Ensure Python 3.12+ is installed. Clone the repository and install requirements:
 ```bash
 git clone https://github.com/Chharlatha23/ai-biscuit-packaging-compatibility.git
 cd ai-biscuit-packaging-compatibility
