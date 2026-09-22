@@ -1,0 +1,41 @@
+dataset_type,variable_name,data_type,unit_if_known,description,source_column_or_mapping,missing_count,unique_count,min_value,max_value
+phase1_initial_characterization.csv,source_archive,str,Refer to source column mapping,Extracted from source_archive,source_archive,0,2,,
+phase1_initial_characterization.csv,source_archive_path,str,Refer to source column mapping,Extracted from source_archive_path,source_archive_path,0,2,,
+phase1_initial_characterization.csv,source_dataset,str,Refer to source column mapping,Extracted from source_dataset,source_dataset,0,2,,
+phase1_initial_characterization.csv,source_file,str,Refer to source column mapping,Extracted from source_file,source_file,0,1,,
+phase1_initial_characterization.csv,source_sheet,str,Refer to source column mapping,Extracted from source_sheet,source_sheet,0,1,,
+phase1_initial_characterization.csv,source_row,int64,Refer to source column mapping,Extracted from source_row,source_row,0,81,2,82
+phase1_initial_characterization.csv,record_id,str,Refer to source column mapping,Extracted from record_id,record_id,0,126,,
+phase1_initial_characterization.csv,dataset_type,str,Refer to source column mapping,Extracted from dataset_type,dataset_type,0,1,,
+phase1_initial_characterization.csv,original_sample,int64,Refer to source column mapping,Extracted from original_sample,original_sample,0,27,1,27
+phase1_initial_characterization.csv,replicate_id,int64,Refer to source column mapping,Extracted from replicate_id,replicate_id,0,5,1,5
+phase1_initial_characterization.csv,initial_moisture_content,float64,Refer to source column mapping,Extracted from Moisture content (% wet basis),Moisture content (% wet basis),0,126,1.4175257731958633,3.35122610068254
+phase1_storage_assessment.csv,source_archive,str,Refer to source column mapping,Extracted from source_archive,source_archive,0,1,,
+phase1_storage_assessment.csv,source_archive_path,str,Refer to source column mapping,Extracted from source_archive_path,source_archive_path,0,1,,
+phase1_storage_assessment.csv,source_dataset,str,Refer to source column mapping,Extracted from source_dataset,source_dataset,0,1,,
+phase1_storage_assessment.csv,source_file,str,Refer to source column mapping,Extracted from source_file,source_file,0,1,,
+phase1_storage_assessment.csv,source_sheet,str,Refer to source column mapping,Extracted from source_sheet,source_sheet,0,1,,
+phase1_storage_assessment.csv,source_row,int64,Refer to source column mapping,Extracted from source_row,source_row,0,35,3,37
+phase1_storage_assessment.csv,record_id,str,Refer to source column mapping,Extracted from record_id,record_id,0,35,,
+phase1_storage_assessment.csv,dataset_type,str,Refer to source column mapping,Extracted from dataset_type,dataset_type,0,1,,
+phase1_storage_assessment.csv,original_sample,int64,Refer to source column mapping,Extracted from original_sample,original_sample,0,35,1,35
+phase1_storage_assessment.csv,storage_duration,int64,Refer to source column mapping,Extracted from Time (day),Time (day),0,5,0,30
+phase1_storage_assessment.csv,L_star,float64,Refer to source column mapping,Extracted from L*,L*,0,35,74.1461617999033,75.5822000055303
+phase1_storage_assessment.csv,a_star,float64,Refer to source column mapping,Extracted from a*,a*,0,35,0.870262839873231,2.35815498280031
+phase1_storage_assessment.csv,b_star,float64,Refer to source column mapping,Extracted from b*,b*,0,35,43.5351236914639,44.7920173687734
+phase1_storage_assessment.csv,storage_hardness,float64,Refer to source column mapping,Extracted from Hardness (N),Hardness (N),0,35,1758.63454752542,3334.52160181332
+phase1_storage_assessment.csv,storage_moisture_content,float64,Refer to source column mapping,Extracted from Moisture content (% wet basis),Moisture content (% wet basis),0,35,3.04707496583279,5.40475065420511
+phase1_storage_assessment.csv,storage_water_activity,float64,Refer to source column mapping,Extracted from Water activity,Water activity,0,35,0.0971602015874122,0.335889011977177
+phase1_storage_assessment.csv,sensory_quality,float64,Refer to source column mapping,Extracted from Sensory quality,Sensory quality,0,35,6.29909455252341,8.07295225338246
+phase1_water_adsorption.csv,source_archive,str,Refer to source column mapping,Extracted from source_archive,source_archive,0,2,,
+phase1_water_adsorption.csv,source_archive_path,str,Refer to source column mapping,Extracted from source_archive_path,source_archive_path,0,2,,
+phase1_water_adsorption.csv,source_dataset,str,Refer to source column mapping,Extracted from source_dataset,source_dataset,0,2,,
+phase1_water_adsorption.csv,source_file,str,Refer to source column mapping,Extracted from source_file,source_file,0,1,,
+phase1_water_adsorption.csv,source_sheet,str,Refer to source column mapping,Extracted from source_sheet,source_sheet,0,1,,
+phase1_water_adsorption.csv,source_row,int64,Refer to source column mapping,Extracted from source_row,source_row,0,1763,2,1764
+phase1_water_adsorption.csv,record_id,str,Refer to source column mapping,Extracted from record_id,record_id,0,2452,,
+phase1_water_adsorption.csv,dataset_type,str,Refer to source column mapping,Extracted from dataset_type,dataset_type,0,1,,
+phase1_water_adsorption.csv,replicate_id,int64,Refer to source column mapping,Extracted from replicate_id,replicate_id,0,9,1,9
+phase1_water_adsorption.csv,storage_temperature,int64,Refer to source column mapping,Extracted from storage_temperature,storage_temperature,0,3,25,45
+phase1_water_adsorption.csv,adsorption_water_activity,float64,Refer to source column mapping,Extracted from Water activity,Water activity,0,837,0.097,0.805
+phase1_water_adsorption.csv,adsorption_moisture_content,float64,Refer to source column mapping,Extracted from Moisture content (% wet basis),Moisture content (% wet basis),0,971,1.1399999999999997,9.44875

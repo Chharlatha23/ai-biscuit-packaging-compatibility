@@ -1,0 +1,27 @@
+{
+    "model_type": "Random Forest",
+    "dataset_path": "processed_data/packaging_pairing_registry.csv",
+    "total_usable_rows": 162,
+    "training_sample_count": 126,
+    "testing_sample_count": 36,
+    "cv_accuracy": 0.9616666666666667,
+    "feature_names": [
+        "initial_moisture",
+        "final_moisture",
+        "moisture_gain",
+        "thickness_micron",
+        "wvtr",
+        "otr",
+        "evidence_quality",
+        "packaging_material"
+    ],
+    "target_name": "recommendation_status",
+    "target_classes": [
+        "Conditionally Recommended",
+        "Not Recommended",
+        "Recommended"
+    ],
+    "random_state": 42,
+    "evaluation_method": "GroupKFold (n=5) by product_id",
+    "training_limitations": "The model is trained on deterministically generated rules. It approximates compatibility rules but lacks independent empirical shelf-life ground truth. The grouped cross-validation ensures no product leakage."
+}

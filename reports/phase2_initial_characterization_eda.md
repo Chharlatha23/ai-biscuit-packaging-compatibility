@@ -1,0 +1,1 @@
+# Initial Characterization EDA\nTotal Rows: 126\nData contains baseline moisture content without making any causation assumptions.\n

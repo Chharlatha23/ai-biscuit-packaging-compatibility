@@ -1,0 +1,1 @@
+# Water Adsorption EDA\nTotal Rows: 2452\nScatter plot represents empirical relation. No mathematical isotherms have been explicitly fitted.\n
