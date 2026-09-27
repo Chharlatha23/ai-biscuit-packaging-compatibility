@@ -24,30 +24,31 @@ metadata = load_metadata()
 # Sidebar Navigation
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", [
-    "🏠 Dashboard", 
-    "🔬 Compatibility Assessment", 
-    "📊 Model Insights", 
-    "📦 Packaging Materials", 
-    "📋 Assessment History", 
+    "🏠 Dashboard",
+    "🔬 Compatibility Assessment",
+    "📊 Model Insights",
+    "📦 Packaging Materials",
+    "📋 Assessment History",
     "ℹ️ About the Model"
 ])
 
 def render_dashboard():
     st.title("🍪 AI Biscuit Packaging Compatibility")
     st.markdown("### ML-powered packaging decision-support dashboard")
-    
-    cv_acc = metadata.get('cv_accuracy', 0.9617)
-    
+
+    cv_acc = metadata.get('cv_accuracy')
+    cv_acc_str = f"{cv_acc*100:.2f}%" if cv_acc is not None else "Unavailable"
+
     col1, col2, col3, col4 = st.columns(4)
     col1.metric("ML Model", metadata.get('model_type', 'Random Forest'))
-    col2.metric("Grouped CV Accuracy", f"{cv_acc*100:.2f}%")
+    col2.metric("Grouped CV Accuracy", cv_acc_str)
     col3.metric("Products Evaluated", "35")
     col4.metric("Packaging Materials", "6")
 
     st.markdown("---")
     st.header("Ready for Assessment")
     st.markdown("> Enter biscuit and packaging characteristics to generate an ML-based compatibility assessment.")
-    
+
     st.markdown("### How it works")
     st.code("""Biscuit Characteristics
         ↓
@@ -63,29 +64,29 @@ Compatibility Prediction""", language="text")
 
 def render_assessment():
     st.title("🔬 Compatibility Assessment")
-    
+
     col1, col2 = st.columns(2)
-    
+
     with col1:
         st.subheader("🍪 Biscuit Characteristics")
         initial_moisture = st.number_input("Initial Moisture Content (g/100g)", min_value=0.0, max_value=100.0, value=3.5, step=0.1)
-        final_moisture = st.number_input("Final (Critical) Moisture Content (g/100g)", min_value=0.0, max_value=100.0, value=5.5, step=0.1)
-        
+        final_moisture = st.number_input("Final Observed Moisture Content (g/100g)", min_value=0.0, max_value=100.0, value=5.5, step=0.1)
+
         moisture_gain = final_moisture - initial_moisture
         st.markdown(f"""
         ```text
         Initial Moisture      {initial_moisture:.1f}
                                ↓
-        Critical Moisture     {final_moisture:.1f}
+        Final Observed Moisture {final_moisture:.1f}
                                ↓
         Moisture Gain         {moisture_gain:.2f} g/100g
         ```
         """)
-        
+
     with col2:
         st.subheader("📦 Packaging Characteristics")
         packaging_material = st.selectbox("Material", ["LDPE", "HDPE", "BOPP", "PET", "Metallized PET", "EVOH Laminate"])
-        
+
         material_info = {
             "LDPE": "Flexible polymer packaging material. Barrier properties: based on the values supplied for this assessment.",
             "HDPE": "High-density polyethylene. Barrier properties: based on the values supplied for this assessment.",
@@ -95,27 +96,23 @@ def render_assessment():
             "EVOH Laminate": "Ethylene vinyl alcohol laminate. Barrier properties: based on the values supplied for this assessment."
         }
         st.info(f"**{packaging_material}**\n\n{material_info[packaging_material]}")
-        
+
         thickness_micron = st.number_input("Thickness (microns)", min_value=1.0, max_value=500.0, value=30.0, step=1.0)
         otr = st.number_input("Oxygen Transmission Rate (OTR) cm³/m²/day", min_value=0.0, value=150.0, step=10.0)
         wvtr = st.number_input("Water Vapor Transmission Rate (WVTR) g/m²/day", min_value=0.0, value=5.0, step=0.5)
-        
+
         st.subheader("📑 Evidence Quality")
         evidence_quality = st.selectbox(
-            "Literature Evidence Quality", 
-            [1.0, 0.8], 
-            format_func=lambda x: "High (Verified DOI)" if x == 1.0 else "Standard (Representative)"
+            "Literature Evidence Quality",
+            [1.0, 0.8],
+            format_func=lambda x: "High (DOI-linked source)" if x == 1.0 else "Standard (Representative)"
         )
 
     st.markdown("---")
-    
-    if st.button("🚀 Run Compatibility Assessment", type="primary", use_container_width=True):
-        if final_moisture <= initial_moisture:
-            st.error("Final moisture must be greater than initial moisture.")
-            return
-            
 
-        
+    if st.button("🚀 Run Compatibility Assessment", type="primary", use_container_width=True):
+
+
         user_input = {
             'initial_moisture': initial_moisture,
             'final_moisture': final_moisture,
@@ -125,36 +122,36 @@ def render_assessment():
             'packaging_material': packaging_material,
             'evidence_quality': evidence_quality
         }
-        
+
         try:
             with st.spinner("Running ML compatibility assessment..."):
                 result = predict_packaging_compatibility(user_input)
-            
+
             st.success("Assessment completed.")
-            
+
             st.markdown("---")
             st.header("COMPATIBILITY ASSESSMENT")
-            
+
             rec = result['recommendation']
             prob = result['probability']
-            
+
             if rec == 'Recommended':
                 st.success(f"### 🟢 {rec.upper()}\n**Model Probability: {prob*100:.1f}%**")
             elif rec == 'Conditionally Recommended':
                 st.warning(f"### 🟡 {rec.upper()}\n**Model Probability: {prob*100:.1f}%**")
             else:
                 st.error(f"### 🔴 {rec.upper()}\n**Model Probability: {prob*100:.1f}%**")
-                
+
             col_res1, col_res2, col_res3 = st.columns(3)
             col_res1.metric("Moisture Gain", f"{moisture_gain:.2f} g/100g")
             col_res2.metric("Packaging", packaging_material)
-            
+
             ev_label = "High" if evidence_quality == 1.0 else "Standard"
             col_res3.metric("Evidence", ev_label)
-            
+
             st.markdown("### Assessment Summary")
             st.markdown(f"> The trained ML model classified the submitted biscuit-packaging configuration as **{rec}** based on patterns learned from the available training dataset.")
-            
+
             if 'class_probabilities' in result:
                 st.markdown("### Model Prediction Distribution")
                 for cls_name, cls_prob in result['class_probabilities'].items():
@@ -165,27 +162,27 @@ def render_assessment():
                         st.progress(cls_prob)
                     with col_p3:
                         st.markdown(f"{cls_prob*100:.1f}%")
-                        
+
             st.markdown("### 🔎 Prediction Factors")
             st.markdown(f"""
             ```text
             Biscuit
             Initial moisture       {initial_moisture:.2f} g/100g
-            Critical moisture      {final_moisture:.2f} g/100g
+            Final observed moisture       {final_moisture:.2f} g/100g
             Moisture gain          {moisture_gain:.2f} g/100g
-            
+
             Packaging
             Material               {packaging_material}
             Thickness              {thickness_micron} µm
             WVTR                   {wvtr}
             OTR                    {otr}
-            
+
             Evidence
             Quality                {ev_label}
             ```
             > **The model evaluates these characteristics together to classify the packaging configuration.**
             """)
-            
+
             # Save to history
             record = {
                 "Timestamp": datetime.now().strftime("%H:%M:%S"),
@@ -204,14 +201,14 @@ def render_assessment():
                 for cls_name, cls_prob in result['class_probabilities'].items():
                     record[f"Prob: {cls_name}"] = f"{cls_prob*100:.1f}%"
             st.session_state.assessment_history.append(record)
-            
+
             st.markdown("---")
             report_content = f"""Assessment ID: {datetime.now().strftime('%Y%m%d%H%M%S')}
 Date/time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 
 Biscuit characteristics:
 - Initial moisture: {initial_moisture:.2f} g/100g
-- Critical moisture: {final_moisture:.2f} g/100g
+- Final observed moisture: {final_moisture:.2f} g/100g
 - Moisture gain: {moisture_gain:.2f} g/100g
 
 Packaging characteristics:
@@ -231,7 +228,7 @@ Model Probability: {prob*100:.1f}%
             report_content += f"""
 Model information:
 - Type: {metadata.get('model_type', 'Random Forest')}
-- CV Accuracy: {metadata.get('cv_accuracy', 0.9617)*100:.2f}%
+- CV Accuracy: {f"{metadata.get('cv_accuracy')*100:.2f}%" if metadata.get('cv_accuracy') is not None else "Unavailable"}
 
 Technical note: {metadata.get('training_limitations', 'Model trained on deterministic rules.')}
 """
@@ -239,14 +236,14 @@ Technical note: {metadata.get('training_limitations', 'Model trained on determin
 
         except Exception as e:
             st.error(f"An error occurred: {str(e)}")
-            
+
     with st.expander("ℹ️ Model Scope & Technical Notes"):
         st.info("The trained Random Forest model generated this assessment from the submitted biscuit and packaging characteristics. Training labels were generated from deterministic rules, and these metrics indicate agreement with the existing decision logic rather than independent experimental validation.")
 
 def render_insights():
     st.title("📊 Model Insights")
     st.header("Model Information")
-    
+
     col1, col2 = st.columns(2)
     with col1:
         st.markdown(f"**Algorithm:** {metadata.get('model_type', 'Random Forest')}")
@@ -255,12 +252,13 @@ def render_insights():
     with col2:
         st.markdown(f"**Features:** {len(metadata.get('feature_names', []))}")
         st.markdown(f"**Classes:** {len(metadata.get('target_classes', []))}")
-        
+
     st.header("Validation")
     st.subheader("5-Fold Product-Grouped Cross-Validation")
-    st.markdown(f"### **{metadata.get('cv_accuracy', 0.9617)*100:.2f}%**")
+    cv_acc_val = metadata.get('cv_accuracy')
+    st.markdown(f"### **{f'{cv_acc_val*100:.2f}%' if cv_acc_val is not None else 'Unavailable'}**")
     st.markdown("> Products were grouped during validation so that observations from the same biscuit product were not split across training and validation folds.")
-    
+
     st.header("Model Validation: Confusion Matrix")
     if os.path.exists('reports/confusion_matrix.png'):
         st.image('reports/confusion_matrix.png')
@@ -270,7 +268,7 @@ def render_insights():
 def render_materials():
     st.title("📦 Packaging Materials")
     st.markdown("Reference dataset values for the packaging materials.")
-    
+
     data = {
         "Material": ["LDPE", "HDPE", "BOPP", "PET", "Metallized PET", "EVOH Laminate"],
         "Thickness": [50, 50, 30, 25, 15, 50],
@@ -282,13 +280,13 @@ def render_materials():
 
 def render_history():
     st.title("📋 Assessment History (Session-based)")
-    
+
     if len(st.session_state.assessment_history) == 0:
         st.info("No assessments run in this session.")
     else:
         df = pd.DataFrame(st.session_state.assessment_history)
         st.dataframe(df[["Timestamp", "Material", "Moisture Gain", "Prediction", "Probability"]] if "Timestamp" in df.columns else df)
-        
+
         csv = df.to_csv(index=False)
         st.download_button(
             label="Download Assessment History CSV",

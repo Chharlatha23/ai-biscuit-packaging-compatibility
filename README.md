@@ -25,7 +25,7 @@ Selecting the optimal packaging material for biscuits is critical to prevent moi
 User Input → Input Validation → Feature Preparation / Preprocessing → Trained Random Forest Classifier → Compatibility Prediction + Class Probabilities → Streamlit Professional Dashboard
 
 ## 7. Dataset
-The data includes biscuit properties (initial moisture, critical moisture), packaging properties (thickness, WVTR, OTR, material type), and evidence quality metrics. 35 biscuit products and 210 biscuit-packaging pairings were evaluated. 
+The data includes biscuit properties (initial moisture, final observed moisture), packaging properties (thickness, WVTR, OTR, material type), and evidence quality metrics. 35 biscuit products and 210 biscuit-packaging pairings were evaluated.
 
 ## 8. Feature Engineering
 Features include `initial_moisture`, `final_moisture`, derived `moisture_gain`, `thickness_micron`, `wvtr`, `otr`, `packaging_material`, and `evidence_quality`. Numeric and categorical features are processed through a scikit-learn Pipeline using `OneHotEncoder` and standard scaling.
@@ -96,6 +96,7 @@ The suite confirms expected exception handling, probability bounds, deterministi
 ## 18. Limitations
 - The model is trained on deterministically generated rules (approximating compatibility rules) and lacks independent empirical real-world shelf-life experimental ground truth.
 - The prediction reflects the classifier's estimated probability for the available training labels, not a real-world failure rate.
+- A DOI/source identifier does not establish that the associated numerical WVTR/thickness/OTR value has been independently verified under comparable test conditions.
 
 ## 19. Future Scope
 - Validation against independent, empirical real-world shelf-life experiments.

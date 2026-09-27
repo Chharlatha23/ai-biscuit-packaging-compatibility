@@ -69,7 +69,7 @@ def test_invalid_moisture():
     }
     with pytest.raises(ValueError):
         predict_packaging_compatibility(test_input)
-        
+
 def test_final_less_than_initial_moisture():
     test_input = {
         'initial_moisture': 6.5,
@@ -80,8 +80,23 @@ def test_final_less_than_initial_moisture():
         'packaging_material': 'LDPE',
         'evidence_quality': 1.0
     }
-    with pytest.raises(ValueError):
-        predict_packaging_compatibility(test_input)
+    result = predict_packaging_compatibility(test_input)
+    assert result['recommendation'] in ['Recommended', 'Conditionally Recommended', 'Not Recommended']
+    assert 'class_probabilities' in result
+
+def test_final_equal_initial_moisture():
+    test_input = {
+        'initial_moisture': 5.0,
+        'final_moisture': 5.0,
+        'thickness_micron': 30,
+        'wvtr': 12.0,
+        'otr': 500,
+        'packaging_material': 'LDPE',
+        'evidence_quality': 1.0
+    }
+    result = predict_packaging_compatibility(test_input)
+    assert result['recommendation'] in ['Recommended', 'Conditionally Recommended', 'Not Recommended']
+    assert 'class_probabilities' in result
 
 def test_unknown_categorical_handling():
     test_input = {
@@ -96,7 +111,7 @@ def test_unknown_categorical_handling():
     # Should raise a ValueError now because handle_unknown='error'
     with pytest.raises(ValueError):
         predict_packaging_compatibility(test_input)
-    
+
 def test_probability_bounds():
     test_input = {
         'initial_moisture': 5.0,
