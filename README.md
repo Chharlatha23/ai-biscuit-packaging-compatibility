@@ -7,7 +7,7 @@ AI-Based Intelligent Food Packaging Material Recommendation System for Biscuits
 This project is an ML-powered decision-support application designed to estimate and predict the compatibility of various food packaging materials for biscuits based on their properties and storage conditions.
 
 ## 3. Problem Statement
-Selecting the optimal packaging material for biscuits is critical to prevent moisture gain and maintain shelf-life. Inappropriate packaging leads to spoilage and economic loss. A systematic, data-driven approach is needed to match biscuit characteristics with appropriate packaging barriers.
+Selecting a packaging material compatible with biscuit moisture-barrier requirements is critical to prevent moisture gain and maintain shelf-life. Inappropriate packaging leads to spoilage and economic loss. A systematic, data-driven approach is needed to match biscuit characteristics with appropriate packaging barriers.
 
 ## 4. Objectives
 - Build a software-only AI-based decision-support system to evaluate biscuit-packaging compatibility.
@@ -96,8 +96,10 @@ The suite confirms expected exception handling, probability bounds, deterministi
 ## 18. Limitations
 - The model is trained on deterministically generated rules (approximating compatibility rules) and lacks independent empirical real-world shelf-life experimental ground truth.
 - The prediction reflects the classifier's estimated probability for the available training labels, not a real-world failure rate.
-- A DOI/source identifier does not establish that the associated numerical WVTR/thickness/OTR value has been independently verified under comparable test conditions.
-
+- Identifying a DOI/source does not independently verify the numerical barrier values.
+- Test conditions may differ between literature and this project.
+- Metallized PET remains pending source verification.
+- EVOH Laminate numerical values remain subject to verification.
 ## 19. Future Scope
 - Validation against independent, empirical real-world shelf-life experiments.
 - Expansion of the packaging knowledge base to include more complex laminate structures and sustainability metrics.
