@@ -159,7 +159,7 @@ def render_assessment():
             col_res1.metric("Moisture Gain", f"{moisture_gain:.2f} g/100g")
             col_res2.metric("Packaging", packaging_material)
 
-            ev_label = "High" if evidence_quality == 1.0 else "Standard"
+            ev_label = "Documented source identifier (DOI)" if evidence_quality == 1.0 else "Representative / non-DOI source"
             col_res3.metric("Evidence", ev_label)
 
             st.markdown("### Assessment Summary")

@@ -7,8 +7,8 @@
   - Files used: Initial characterization_Achira biscuits.xlsx, Water Adsorption Isotherms_Achira biscuits.xlsx
 
 ## Summary Metrics
-- **Total records extracted:** 4498
-- **Final deduplicated records:** 1343
+- **Total records extracted:** 2613
+- **Final deduplicated records:** 2613
 
 ## Data Handling and Corrections Applied
 - **Separate Datasets**: Raw data is strictly categorized into Initial Characterization, Water Adsorption Isotherms, and Storage Assessment before any harmonized merging.

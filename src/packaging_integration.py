@@ -8,10 +8,21 @@ def extract_biscuit_features(biscuit_df):
     """
     features = []
 
-    # Using the phase1 storage assessment for temporal data
-    for sample_id, group in biscuit_df.groupby('original_sample'):
-        storage_rows = group[group['dataset_type'] == 'Storage Assessment'].sort_values('storage_duration')
-        init_rows = group[group['dataset_type'] == 'Initial Characterization']
+    # 1. Identify each storage-assessment record.
+    storage_df = biscuit_df[biscuit_df['dataset_type'] == 'Storage Assessment']
+
+    # 2. Group by BOTH source_dataset and original_sample to prevent cross-dataset mixing
+    for (src, sample_id), storage_group in storage_df.groupby(['source_dataset', 'original_sample']):
+        storage_rows = storage_group.sort_values('storage_duration')
+
+        # 3. Select the initial-characterization record from the SAME source_dataset and SAME original_sample
+        init_rows = biscuit_df[
+            (biscuit_df['source_dataset'] == src) &
+            (biscuit_df['original_sample'] == sample_id) &
+            (biscuit_df['dataset_type'] == 'Initial Characterization')
+        ]
+
+        group = pd.concat([storage_rows, init_rows])
 
         if not storage_rows.empty and not init_rows.empty and 'storage_moisture_content' in storage_rows.columns and 'initial_moisture_content' in init_rows.columns:
             storage_m = storage_rows['storage_moisture_content'].dropna()

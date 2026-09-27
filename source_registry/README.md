@@ -1,0 +1,1 @@
+The phase3_pairing_registry.csv file in this directory is an unused template artifact. The actual authoritative registry used in the project is located at processed_data/packaging_pairing_registry.csv.
