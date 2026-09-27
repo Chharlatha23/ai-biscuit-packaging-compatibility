@@ -100,9 +100,9 @@ def score_material(required_wvtr, material, biscuit_temp):
     if final_score >= 0.85 and moisture_barrier_score == 1.0:
         status = 'Recommended'
         if missing_temp:
-            reason = f'Score {final_score:.2f}: Meets WVTR requirement with good evidence; condition matching unavailable due to missing storage temperature.'
+            reason = f'Score {final_score:.2f}: Meets WVTR requirement with a documented source identifier; condition matching unavailable due to missing storage temperature.'
         else:
-            reason = f'Score {final_score:.2f}: Meets WVTR requirement with good evidence and condition matching'
+            reason = f'Score {final_score:.2f}: Meets WVTR requirement with a documented source identifier and condition matching'
     elif final_score >= 0.60:
         status = 'Conditionally Recommended'
         if missing_temp:
@@ -145,7 +145,7 @@ def run_integration(biscuit_csv, packaging_csv, output_csv):
 
             results.append({
                 'product_id': biscuit['product_id'],
-                'biscuit_properties_used': 'moisture_gain, storage_temperature',
+                'biscuit_properties_used': 'moisture_gain; storage_temperature unavailable',
                 'initial_moisture': biscuit['initial_moisture'],
                 'final_moisture': biscuit['final_moisture'],
                 'moisture_gain': biscuit['moisture_gain'],
